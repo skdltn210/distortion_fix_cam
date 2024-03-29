@@ -57,13 +57,20 @@ while cap.isOpened():
 # 카메라 캘리브레이션
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
-# 카메라 내부 매개 변수 출력
+# 카메라 내부 매개 변수 출력 (행렬 형태)
+print("카메라 내부 매개 변수 (행렬 형태):")
+print(mtx)
+
+# 카메라 내부 매개 변수 출력 (fx, fy, cx, cy, ...)
 fx = mtx[0, 0]
 fy = mtx[1, 1]
 cx = mtx[0, 2]
 cy = mtx[1, 2]
-print("카메라 내부 매개 변수:")
-print(f"(fx, fy, cx, cy, ..., rmse): ({fx}, {fy}, {cx}, {cy}, ..., {ret})")
+
+# RMSE 값 출력
+rmse = ret
+print("\n카메라 내부 매개 변수:")
+print(f"(fx, fy, cx, cy, ..., rmse): ({fx}, {fy}, {cx}, {cy}, ..., {rmse})")
 
 # 렌즈 왜곡 매개 변수 출력
 print("\n렌즈 왜곡 매개 변수:")
@@ -75,4 +82,5 @@ np.savez('calibration_result.npz', mtx=mtx, dist=dist)
 # 종료
 cap.release()
 cv2.destroyAllWindows()
+
 
